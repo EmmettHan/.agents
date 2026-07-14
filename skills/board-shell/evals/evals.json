@@ -1,0 +1,23 @@
+{
+  "skill_name": "board-shell",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我在开发板上执行 softbus_tool 的 GetLocalDeviceInfo 命令，把设备信息拿回来",
+      "expected_output": "SSH connects to the board, drives softbus_tool with menu inputs 0 and 8, captures and displays device info (DeviceName, IP, MAC, etc.)",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想通过 ssh 进入开发板的交互式 shell，像 hdc shell 那样，怎么操作？我在 Windows PowerShell 上",
+      "expected_output": "Provides the correct PowerShell ssh -tt command with the right key path and connection parameters",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "开发板重启了，sshd 挂了，帮我重新连上",
+      "expected_output": "Detects that sshd needs restart, uses hdc to restart it, then verifies SSH connectivity",
+      "files": []
+    }
+  ]
+}
