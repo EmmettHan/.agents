@@ -1,6 +1,6 @@
 ---
-name: explain-diff-html
-description: Use when the user asks for a rich explanation of a code change, diff, branch, or PR. Produces a self-contained interactive HTML file with Background, Intuition, Code walkthrough, and a multiple-choice Quiz. Use this skill whenever the user wants to understand a commit, diff, branch, PR, or merge — even if they just say "explain this change" or paste a diff — rather than only when they explicitly ask for "an HTML explanation".
+name: explain-diff
+description: Use when the user asks for a rich explanation of a code change, diff, branch, or PR. Produces a self-contained interactive HTML file (in Chinese) with Background, Intuition, Code walkthrough, and a multiple-choice Quiz. Use this skill whenever the user wants to understand a commit, diff, branch, PR, or merge — even if they just say "explain this change" or paste a diff — rather than only when they explicitly ask for "an HTML explanation".
 ---
 
 # Explain Diff
@@ -20,6 +20,7 @@ Produce a rich, interactive explanation of the specified code change as a single
 - One long scrolling page with section headers and a table of contents. Don't use tabs for the top-level structure.
 - Basic responsive styling so it's readable on a phone.
 - Save it to a global location outside the current repo (e.g. `/tmp/`), with the filename always prefixed by today's date as `YYYY-MM-DD-`, so files stay time-sorted and out of version control. Example: `/tmp/2026-01-12-explanation-<slug>.html`
+- 输出内容一律使用中文（包括正文、标题、图表标注、代码注释说明、Quiz 题目与选项）。代码本身和标识符保持原样，不要翻译。
 - Write with the clarity and flow of Martin Kleppmann: engaging, in classic style, with smooth transitions between sections.
 
 ## Diagrams
