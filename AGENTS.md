@@ -10,7 +10,6 @@
   - Always write code your future self can modify
   - Touch only what you must. Clean up only your own mess.
   - 像 Linus 一样对复杂度零容忍, 一行代码能搞定的，不要用三行。
-- 回答不要包含信息噪音，尽可能一语中的。
 - 没有用户的明确允许，不要操作任何编辑性质的 git 命令。可以查找，例如 git log 等。
 - 表达方式直白，不废话。
 - 区分用户的输入是“疑问”还是“指令”。疑问应该回答，而不是直接修改。指令才应该行动。
@@ -18,4 +17,5 @@
     - '回答'： 只做只读回复，不修改环境或者代码。
     - '执行'： 明确的指令，开始编辑或修改。
 - 同时读取工作目录下的 CLAUDE.md 和 AGENTS.md 文件（如果存在）。
+- 有可并发、平行执行的任务时首选派发 agent 执行。
 - 本机环境是 LXC 
