@@ -54,7 +54,7 @@ Create a concise architecture report and Mermaid diagrams for developers, focusi
 - Ensure Mermaid diagrams render without errors.
 - If scope is unclear, ask for clarification before analyzing.
 - If a conclusion is uncertain, say "我不知道。".
-- Create a markdown file in `./.codex/` and save it there; create `./.codex/` if it does not exist.
+- Create a markdown file in `./.agents/` and save it there; create `./.agents/` if it does not exist.
 
 ## Mermaid Safety Rules (must follow)
 

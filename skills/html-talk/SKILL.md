@@ -24,7 +24,7 @@ description: "HTML scratchpad for AI output. Accumulates answers in one growing 
 
 ## 3. 证据纪律
 
-- 非显而易见的结论内联 `<span class="path">file:line</span>`，行号必须真实。
+- 非显而易见的结论内联 `<span class="path">file:line</span>`，行号必须真实, 文件第一次出现时给绝对路径。
 - 无源码证据的结论不得伪装成事实。推断就说推断，不确定就说不确定。
 
 ## 4. 交付
