@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: distributed-screen-debug
 description: Analyze distributed screen v1.0 incidents from source/sink/caller/dependency logs. Use when the user provides a clear time point, operation, and symptom for DSCREEN, DHFWK, DHARDWARECOMMON, ScreenManager, distributed_input, or window_manager issues, and needs first-fault localization, code-backed root-cause analysis, or v2.0 is mentioned and should still be treated as v1.0.
 ---

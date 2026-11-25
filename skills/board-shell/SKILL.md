@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: board-shell
 description: Execute commands and drive interactive programs on OpenHarmony development boards via SSH or hdc. Use this skill whenever the user wants to run commands on a development board, debug board-side programs, interact with tools like softbus_tool, automate board tasks, control a Windows-USB-connected board from an LXC/remote Linux server through ssh board-win and Windows hdc, or mentions hdc shell, 开发板, board shell, reverse SSH tunnel, or connected device control. Supports LXC/Linux controllers, Windows PowerShell, WSL, and Git Bash.
 ---
@@ -13,28 +14,23 @@ Do not assume a fixed `Host board`, fixed local port, or fixed device. Pick the 
 
 ### Topology A: LXC/Linux controls a Windows USB board
 
-Use this when the Linux/LXC host can SSH into Windows through a reverse tunnel, usually with:
+Windows owns USB and `hdc.exe`. Windows initiates the reverse SSH tunnel to LXC, and LXC reaches Windows through its `board-win` alias. The alias's effective port is authoritative. On Annan's LXC it currently resolves to `127.0.0.1:2224`, managed by the Windows scheduled task `BoardWinReverseSsh`.
 
-```sshconfig
-Host board-win
-    HostName 127.0.0.1
-    Port 2222
-    User kaihong
-```
+Use the scheduled task as the sole owner of the alias's tunnel port. For deployment and recovery, see [Windows reverse SSH](references/windows-reverse-ssh.md).
 
-In this topology, Windows owns USB and `hdc.exe`; Linux only orchestrates commands through SSH.
-
-Validate the chain first:
+Verify Windows access first, then enumerate boards:
 
 ```bash
-ssh board-win "hostname && where hdc && hdc list targets"
+ssh -G board-win 2>/dev/null | awk '$1 ~ /^(hostname|port|user)$/'
+timeout 10s ssh -o BatchMode=yes -o ConnectTimeout=5 board-win hostname
+timeout 15s ssh -o BatchMode=yes -o ConnectTimeout=5 board-win "hdc list targets"
 ```
 
 Choose the device ID from `hdc list targets`:
 
 - If exactly one target is listed, use it.
 - If multiple targets are listed, do not guess. Ask for the intended device ID unless the user already supplied one.
-- Do not bind the skill to a long-lived `board` alias or a fixed `12224`/`2224` forwarding port.
+- Use the hdc device ID for board identity. Select a free Windows-side hdc forwarding port when needed.
 
 Run normal board commands through Windows hdc:
 
@@ -245,7 +241,7 @@ Key points:
 - Always use `-tt` for interactive programs
 - Pipe the input sequence with newlines separating each input
 - **From LXC: use `(echo a && echo b && echo c)` in Windows cmd**, not `printf` or `echo -e` (they don't exist in cmd)
-- **Always wrap with `timeout`** (Unix) or set `ConnectTimeout` (Windows cmd `timeout` has different syntax and doesn't work the same way). Many embedded programs don't exit on stdin EOF — they loop forever waiting for input, leaving orphan processes on the device that accumulate and waste resources.
+- For scripted interaction, bound the whole invocation with a Unix `timeout` wrapper or the caller's execution deadline. `ConnectTimeout` covers the connection and initial SSH handshake. Include the program's exit commands because ending the local invocation does not guarantee that the device process exits.
 - Include exit commands in the input sequence (menu item for "exit" or "quit") so the program exits cleanly
 - No delays needed between inputs (unlike the FIFO hack)
 - **Quoting trap**: When driving interactive programs through `ssh board-win "cmd /c \"...\""`, every layer of quoting strips one level. Prefer simple commands without `;`, `$`, or nested quotes on the device side. If you need a complex command, test the simplest version first.
@@ -438,7 +434,7 @@ scp -i ~/.ssh/agent_key -P 2223 -o StrictHostKeyChecking=no root@192.168.1.108:/
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| `ssh board-win` fails | Reverse SSH tunnel from Windows to LXC is down or LXC `Host board-win` is missing | Re-establish the Windows `RemoteForward 2222 127.0.0.1:22` tunnel and verify `ssh board-win "hostname"` |
+| `ssh board-win` fails | The failure may be in alias resolution, the LXC listener, the reverse tunnel, or Windows OpenSSH | Resolve the alias with `ssh -G board-win`, run the bounded hostname probe, and follow [Windows reverse SSH recovery](references/windows-reverse-ssh.md) |
 | `hdc list targets` works on Windows but not from LXC | LXC is trying local hdc instead of Windows hdc | Use `ssh board-win "hdc list targets"` |
 | Multiple `hdc list targets` entries | More than one board/device is visible | Do not guess. Use `hdc -t <device-id> ...` with the intended device |
 | `Host board` points to the wrong board | Fixed port forwarding is not device identity | Use hdc device ID as identity; create fport only when needed |

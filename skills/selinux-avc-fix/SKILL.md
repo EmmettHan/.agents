@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: selinux-avc-fix
 description: Diagnose and fix SELinux avc/denied logs by proposing minimal policy changes in the sepolicy_ext repository (.te, file_contexts, type declarations). Use when a user provides SELinux audit/avc errors or asks to adjust SELinux permissions for services/files in this repo.
 ---

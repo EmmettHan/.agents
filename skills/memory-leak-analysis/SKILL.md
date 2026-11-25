@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: memory-leak-analysis
 description: >-
   Analyze process memory leak from PSS monitoring data (mem.txt), memory trend

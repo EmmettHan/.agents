@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: html-talk
 description: "HTML scratchpad for AI output. Accumulates answers in one growing HTML file. Trigger on multi-turn 调研/梳理/分析/research."
 ---

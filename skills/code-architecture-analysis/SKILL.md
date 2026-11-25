@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: code-architecture-analysis
 description: Analyze C/C++ repository architecture and produce a developer-facing Markdown report with capabilities, usage scenarios, runtime module boundaries, data flow, call chains, and Mermaid diagrams (flowchart + sequence). Use when a user asks to analyze code architecture, repository capabilities, usage scenarios, boundaries, call chains, data flow, or wants an architecture diagram, especially for C/C++ repos or multi-repo subsystems.
 ---

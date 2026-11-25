@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: codebase-study-guide
 description: "Generate a pedagogically-grounded HTML study guide for learning an unfamiliar codebase. Use when the user wants to onboard onto a codebase, understand a project's architecture, create learning materials for a team, or asks things like \"help me learn this codebase\", \"create an onboarding guide\", \"I'm new to this project\", \"how does this system work\", \"study guide for this repo\", or \"explain this codebase to me\". Produces a self-contained HTML guide that builds understanding from purpose to systems to patterns, using evidence-based learning techniques (elaborative interrogation, concept mapping, threshold concepts, worked examples, progressive disclosure)."
 ---
